@@ -51,10 +51,8 @@ function isFst<CT extends ContainerBase>(container: Container<CT>, ctx: Token) {
             `failed to render container: ${containerStr} caller: ${ctxStr} doesn't have map`,
         );
     }
-    return (
-        (container.row === start && !container.rendered) ||
-        (!container.rendered && isBlockquote(container))
-    );
+
+    return !container.rendered && (container.row === start || isBlockquote(container));
 }
 
 function isEmpty<CT extends ContainerBase>(container: Container<CT>) {
