@@ -2,10 +2,10 @@ import {Options} from 'markdown-it';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
+import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
 import {consumeList, isList} from './list';
-
-import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
+import {getMap} from 'src/token';
 
 export type ContainerBlockquote = ContainerBase & {type: 'blockquote_open'};
 
@@ -18,16 +18,13 @@ const blockquote: Renderer.RenderRuleRecord = {
         env: MarkdownRendererEnv,
     ) {
         const {source} = env;
-        const {map, markup} = tokens[i];
-        if (!source?.length || !map || !markup) {
+        const {markup} = tokens[i];
+
+        if (!source?.length || !markup) {
             throw new Error('failed to render blockquote');
         }
 
-        const [start] = map;
-        if (start === null) {
-            throw new Error('failed to render blockquote');
-        }
-
+        const [start] = getMap(tokens[i]);
         const [line] = source.slice(start, start + 1);
         if (!line?.length) {
             throw new Error('failed to render blockquote');

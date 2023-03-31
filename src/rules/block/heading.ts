@@ -2,6 +2,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {getMap} from 'src/token';
 
 export type HeadingState = {
     heading: {
@@ -51,12 +52,11 @@ const heading: Renderer.RenderRuleRecord = {
         // no mappings avaialbe for the heading_open
         // or markdown source wasn't provided via environment
         const open = this.state.heading.pending.pop();
-
-        if (!open?.map || !source?.length) {
+        if (!open || !source?.length) {
             return '';
         }
 
-        const [_, end] = open.map;
+        const [_, end] = getMap(open);
 
         const markup = source.slice(end - 1, end);
 

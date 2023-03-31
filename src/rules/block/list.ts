@@ -2,12 +2,11 @@ import {Options} from 'markdown-it';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {consumeBlockquote, isBlockquote} from './blockquote';
-
-import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
-
-import {isCode} from 'src/rules/block/code';
 import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
+import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {consumeBlockquote, isBlockquote} from './blockquote';
+import {isCode} from 'src/rules/block/code';
+import {getMap} from 'src/token';
 
 export type ContainerOrderedList = ContainerBase & {type: 'ordered_list_open'; order: number};
 
@@ -31,16 +30,12 @@ function listItemOpen(
     env: MarkdownRendererEnv,
 ) {
     const {source} = env;
-    const {map, markup} = tokens[i];
-    if (!source?.length || !map || !markup) {
+    const {markup} = tokens[i];
+    if (!source?.length || !markup) {
         throw new Error('failed to render ordered list');
     }
 
-    const [start] = map;
-    if (start === null) {
-        throw new Error('failed to render ordered list');
-    }
-
+    const [start] = getMap(tokens[i]);
     const [line] = source.slice(start, start + 1);
     if (!line?.length) {
         throw new Error('failed to render ordered list');

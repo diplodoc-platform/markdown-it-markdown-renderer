@@ -3,6 +3,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {getMap} from 'src/token';
 
 const separate = new Set(['html_block', 'paragraph_close', 'bullet_list_close']);
 
@@ -14,11 +15,6 @@ const code: Renderer.RenderRuleRecord = {
         options: Options,
         env: MarkdownRendererEnv,
     ) {
-        const {content, map} = tokens[i];
-        if (!map) {
-            throw new Error('failed render code block');
-        }
-
         let rendered = '';
 
         // vertical separation
@@ -33,9 +29,9 @@ const code: Renderer.RenderRuleRecord = {
         let indentation = 0;
 
         // determine indentation
-        const [start, end] = map;
+        const [start, end] = getMap(tokens[i]);
         const {source} = env;
-        if (start !== null && end !== null && source) {
+        if (source) {
             const [first] = source.slice(start, end);
 
             const spaces = first.length - first.trimStart().length;
@@ -45,7 +41,7 @@ const code: Renderer.RenderRuleRecord = {
             indentation += 4;
         }
 
-        const contentLines = content.split('\n');
+        const contentLines = tokens[i].content.split('\n');
 
         if (this.containers.length) {
             for (const line of contentLines) {
