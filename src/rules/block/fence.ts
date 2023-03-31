@@ -3,6 +3,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
 
 const fence: Renderer.RenderRuleRecord = {
@@ -116,7 +117,7 @@ function parseFence(str: string) {
     // parse indentation
     let indentation = 0;
 
-    for (i = 0; i < str.length && str.charAt(i) === ' '; i++);
+    i = skipChars(str, [' ']);
 
     indentation = i;
 
@@ -139,7 +140,7 @@ function parseFence(str: string) {
 
     const markupStart = i;
 
-    for (; str.charAt(i) === syntax; i++);
+    i = skipChars(str, [syntax], i);
 
     const markupEnd = i;
 

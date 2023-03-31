@@ -5,6 +5,7 @@ import Token from 'markdown-it/lib/token';
 import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
 import {consumeList, isList} from './list';
+import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
 
 export type ContainerBlockquote = ContainerBase & {type: 'blockquote_open'};
@@ -54,7 +55,7 @@ const blockquote: Renderer.RenderRuleRecord = {
         }
 
         // scan for the tsapces
-        for (j = col + 1; line.charAt(j) === ' ' && j < line.length; j++);
+        j = skipChars(line, [' '], col + 1);
 
         this.containers.push({
             type: tokens[i].type,
