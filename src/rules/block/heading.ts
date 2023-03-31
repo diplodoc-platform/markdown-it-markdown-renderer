@@ -58,9 +58,7 @@ const heading: Renderer.RenderRuleRecord = {
 
         const [_, end] = getMap(open);
 
-        const markup = source.slice(end - 1, end);
-
-        return this.EOL + markup.pop();
+        return this.EOL + source[end - 1];
     },
 };
 
