@@ -2,8 +2,22 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 import {Options} from 'markdown-it';
 
+export enum CustomRendererLifeCycle {
+    BeforeRender,
+    AfterRender,
+    BeforeInlineRender,
+    AfterInlineRender,
+}
+
+function isCustomRendererLifeCycle(cycle: unknown): cycle is CustomRendererLifeCycle {
+    return Object.keys(CustomRendererLifeCycle).includes(
+        cycle as keyof typeof CustomRendererLifeCycle,
+    );
+}
+
 export type CustomRendererParams<S = {}> = {
     handlers?: CustomRendererHanlders;
+    hooks?: CustomRendererHooks;
     rules?: Renderer.RenderRuleRecord;
     mode?: CustomRendererMode;
     initState?: () => S;
@@ -16,14 +30,24 @@ export enum CustomRendererMode {
     Development,
 }
 
+export type CustomRendererHooks = Record<string, RenderHook | RenderHook[]>;
+
+export interface RenderHook {
+    (parameters: RenderHookParameters): string;
+}
+
+export type RenderHookParameters = {tokens: Token[]; options: Options; env: unknown};
+
 class CustomRenderer<State = {}> extends Renderer {
     protected mode: CustomRendererMode;
     protected handlers: Map<string, Renderer.RenderRule[]>;
     protected state: State;
+    protected hooks: Map<CustomRendererLifeCycle, RenderHook[]>;
 
     constructor({
         mode = CustomRendererMode.Production,
         handlers = {},
+        hooks = {},
         rules = {},
         initState = () => ({} as State),
     }: CustomRendererParams<State>) {
@@ -35,6 +59,9 @@ class CustomRenderer<State = {}> extends Renderer {
         this.state = initState();
         this.handlers = new Map<string, Renderer.RenderRule[]>();
         this.setHandlers({...handlers});
+
+        this.hooks = new Map<CustomRendererLifeCycle, RenderHook[]>();
+        this.setHooks({...hooks});
     }
 
     setRules(rules: Renderer.RenderRuleRecord) {
@@ -65,6 +92,34 @@ class CustomRenderer<State = {}> extends Renderer {
         this.handlers.set(type, [...handlers, ...normalized]);
     }
 
+    setHooks(hooks: CustomRendererHooks) {
+        for (const [name, hook] of Object.entries(hooks)) {
+            if (isCustomRendererLifeCycle(name)) {
+                this.hook(parseInt(name, 10), hook);
+            }
+        }
+    }
+
+    hook(cycle: CustomRendererLifeCycle, hook: RenderHook | RenderHook[]) {
+        const hooks = this.hooks.get(cycle) ?? [];
+
+        const normalized = (Array.isArray(hook) ? hook : [hook]).map((h) => h.bind(this));
+
+        this.hooks.set(cycle, [...hooks, ...normalized]);
+    }
+
+    runHooks(cycle: CustomRendererLifeCycle, parameters: RenderHookParameters) {
+        let rendered = '';
+
+        const hooks = this.hooks.get(cycle) ?? [];
+
+        for (const hook of hooks) {
+            rendered += hook(parameters);
+        }
+
+        return rendered;
+    }
+
     render(tokens: Token[], options: Options, env: unknown) {
         let rendered = '';
 
@@ -72,6 +127,10 @@ class CustomRenderer<State = {}> extends Renderer {
         let type;
         let len;
         let i;
+
+        const parameters = {tokens, options, env};
+
+        rendered += this.runHooks(CustomRendererLifeCycle.BeforeRender, parameters);
 
         for (i = 0, len = tokens.length; i < len; i++) {
             type = tokens[i].type;
@@ -86,6 +145,8 @@ class CustomRenderer<State = {}> extends Renderer {
             rendered += this.processToken(tokens, i, options, env);
         }
 
+        rendered += this.runHooks(CustomRendererLifeCycle.AfterRender, parameters);
+
         return rendered;
     }
 
@@ -95,9 +156,15 @@ class CustomRenderer<State = {}> extends Renderer {
         let len;
         let i;
 
+        const parameters = {tokens, options, env};
+
+        rendered += this.runHooks(CustomRendererLifeCycle.BeforeInlineRender, parameters);
+
         for (i = 0, len = tokens.length; i < len; i++) {
             rendered += this.processToken(tokens, i, options, env);
         }
+
+        rendered += this.runHooks(CustomRendererLifeCycle.AfterInlineRender, parameters);
 
         return rendered;
     }
