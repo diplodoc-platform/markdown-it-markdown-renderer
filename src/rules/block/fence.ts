@@ -3,6 +3,8 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {skipChars} from 'src/parsers';
+import {getMap} from 'src/token';
 
 const fence: Renderer.RenderRuleRecord = {
     fence: fenceHandler,
@@ -16,10 +18,7 @@ function fenceHandler(
     options: Options,
     env: MarkdownRendererEnv,
 ) {
-    const {markup, info, content, map} = tokens[i];
-    if (!map) {
-        throw new Error('failed render fence block');
-    }
+    const {markup, info, content} = tokens[i];
 
     let rendered = '';
 
@@ -37,9 +36,9 @@ function fenceHandler(
 
     let contentLines = content?.length ? content.split('\n') : [];
 
-    const [start, end] = map;
+    const [start, end] = getMap(tokens[i]);
     const {source} = env;
-    if (start !== null && end !== null && end > start && source?.length) {
+    if (end > start && source?.length) {
         const fenceLength = end - start;
 
         const fenceLines = source.slice(start, end);
@@ -118,7 +117,7 @@ function parseFence(str: string) {
     // parse indentation
     let indentation = 0;
 
-    for (i = 0; i < str.length && str.charAt(i) === ' '; i++);
+    i = skipChars(str, [' ']);
 
     indentation = i;
 
@@ -141,7 +140,7 @@ function parseFence(str: string) {
 
     const markupStart = i;
 
-    for (; str.charAt(i) === syntax; i++);
+    i = skipChars(str, [syntax], i);
 
     const markupEnd = i;
 

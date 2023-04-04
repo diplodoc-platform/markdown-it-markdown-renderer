@@ -2,12 +2,12 @@ import {Options} from 'markdown-it';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {consumeBlockquote, isBlockquote} from './blockquote';
-
-import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
-
-import {isCode} from 'src/rules/block/code';
 import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
+import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {consumeBlockquote, isBlockquote} from './blockquote';
+import {isCode} from 'src/rules/block/code';
+import {skipChars} from 'src/parsers';
+import {getMap} from 'src/token';
 
 export type ContainerOrderedList = ContainerBase & {type: 'ordered_list_open'; order: number};
 
@@ -31,16 +31,12 @@ function listItemOpen(
     env: MarkdownRendererEnv,
 ) {
     const {source} = env;
-    const {map, markup} = tokens[i];
-    if (!source?.length || !map || !markup) {
+    const {markup} = tokens[i];
+    if (!source?.length || !markup) {
         throw new Error('failed to render ordered list');
     }
 
-    const [start] = map;
-    if (start === null) {
-        throw new Error('failed to render ordered list');
-    }
-
+    const [start] = getMap(tokens[i]);
     const [line] = source.slice(start, start + 1);
     if (!line?.length) {
         throw new Error('failed to render ordered list');
@@ -62,7 +58,7 @@ function listItemOpen(
 
     let lspaces = j;
 
-    for (; line.charAt(j) === ' ' && j < line.length; j++);
+    j = skipChars(line, [' '], j);
 
     lspaces = lspaces === j ? 0 : j - lspaces;
 
@@ -72,7 +68,7 @@ function listItemOpen(
     }
 
     // scan for the tsapces
-    for (j = col + 1; line.charAt(j) === ' ' && j < line.length; j++);
+    j = skipChars(line, [' '], col + 1);
 
     let tspaces = j - col - 1;
 
@@ -80,9 +76,7 @@ function listItemOpen(
 
     let empty = line.slice(col).trimEnd().endsWith(markup);
 
-    let k;
-
-    for (k = col + 1; (line.charAt(k) === ' ' || line.charAt(k) === '\n') && k < line.length; k++);
+    const k = skipChars(line, [' ', '\n'], col + 1);
 
     if (k !== line.length) {
         empty = false;
@@ -94,7 +88,7 @@ function listItemOpen(
             next = '';
         }
 
-        for (j = 0; next.charAt(j) === ' ' && j < next.length; j++);
+        j = skipChars(next, [' ']);
 
         tspaces = j;
     }

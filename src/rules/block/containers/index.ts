@@ -1,6 +1,7 @@
 import Token from 'markdown-it/lib/token';
 import {ContainerOrderedList, ContainerUnorderedList} from 'src/rules/block/list';
 import {ContainerBlockquote, isBlockquote} from 'src/rules/block/blockquote';
+import {getMap} from 'src/token';
 
 export type ContainerRenderer<CT extends ContainerBase> = (
     containers: Container<CT>[],
@@ -26,15 +27,7 @@ export type ContainerBase = {
 };
 
 function isTail<CT extends ContainerBase>(container: Container<CT>, ctx: Token) {
-    const [start] = ctx?.map ?? [null];
-    // eslint-disable-next-line eqeqeq, no-eq-null
-    if (start == null) {
-        const containerStr = JSON.stringify(container);
-        const ctxStr = JSON.stringify(ctx);
-        throw new Error(
-            `failed to render container: ${containerStr} caller: ${ctxStr} doesn't have map`,
-        );
-    }
+    const [start] = getMap(ctx);
 
     // >= instead of > because we can open markup on the same line as list
     // as an example with ``` and then span inside the list with fences content
@@ -42,19 +35,9 @@ function isTail<CT extends ContainerBase>(container: Container<CT>, ctx: Token) 
 }
 
 function isFst<CT extends ContainerBase>(container: Container<CT>, ctx: Token) {
-    const [start] = ctx?.map ?? [null];
-    // eslint-disable-next-line eqeqeq, no-eq-null
-    if (start == null) {
-        const containerStr = JSON.stringify(container);
-        const ctxStr = JSON.stringify(ctx);
-        throw new Error(
-            `failed to render container: ${containerStr} caller: ${ctxStr} doesn't have map`,
-        );
-    }
-    return (
-        (container.row === start && !container.rendered) ||
-        (!container.rendered && isBlockquote(container))
-    );
+    const [start] = getMap(ctx);
+
+    return !container.rendered && (container.row === start || isBlockquote(container));
 }
 
 function isEmpty<CT extends ContainerBase>(container: Container<CT>) {
