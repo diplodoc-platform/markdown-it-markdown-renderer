@@ -1,6 +1,6 @@
+import MarkdownIt, {Options} from 'markdown-it';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
-import {Options} from 'markdown-it';
 
 export enum CustomRendererLifeCycle {
     BeforeRender,
@@ -192,5 +192,16 @@ class CustomRenderer<State = {}> extends Renderer {
     }
 }
 
-export {CustomRenderer};
-export default {CustomRenderer};
+function customRenderer(parser: MarkdownIt, parameters?: CustomRendererParams) {
+    const options = {
+        ...parameters,
+    };
+
+    const renderer = new CustomRenderer(options);
+
+    // @ts-ignore
+    parser.renderer = renderer;
+}
+
+export {CustomRenderer, customRenderer};
+export default {CustomRenderer, customRenderer};
