@@ -1,7 +1,12 @@
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {CustomRendererMode, CustomRenderer, CustomRendererParams} from 'src/custom-renderer';
+import {
+    CustomRenderer,
+    CustomRendererParams,
+    CustomRendererMode,
+} from '@diplodoc/markdown-it-custom-renderer';
+
 import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
 import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';

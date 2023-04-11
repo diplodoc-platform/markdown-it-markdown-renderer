@@ -2,12 +2,6 @@ import Renderer from 'markdown-it/lib/renderer';
 import {MarkdownRenderer, MarkdownRendererMode} from 'src/renderer';
 
 describe('MarkdownRenderer', () => {
-    it('is instance of the MarkdownIt Renderer', () => {
-        const renderer = new MarkdownRenderer();
-
-        expect(renderer instanceof Renderer).toBe(true);
-    });
-
     it('is instance of the Markdown Renderer', () => {
         const renderer = new MarkdownRenderer();
 

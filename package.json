@@ -60,5 +60,8 @@
   },
   "peerDependencies": {
     "markdown-it": "^13.0.1"
+  },
+  "dependencies": {
+    "@diplodoc/markdown-it-custom-renderer": "0.0.1"
   }
 }
