@@ -3,17 +3,16 @@
   "compilerOptions": {
     "declaration": true,
     "moduleResolution":"node",
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "rootDir": "src/",
-    "outDir": "lib/"
-  },
-  "include": [
-    "src/"
-  ],
-  "paths": {
+    "rootDir": "src",
+    "outDir": "lib/",
+    "paths": {
       "src/*": ["src/*"],
       "__tests__/*": ["__tests__/*"]
+    }
   },
+  "include": ["src/**/*"],
   "exclude": ["src/playground.ts", "./node_modules"]
 }
