@@ -22,7 +22,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --coverage --verbose --silent=false",
-    "build": "npm run build:clean && tsc",
+    "build": "npm run build:clean && tsc -p tsconfig.types.json && node scripts/bundle.js",
     "build:clean": "rm -rf lib",
     "build:dev": "npm run build:dev:clean && npm run build:dev:code",
     "build:dev:code": "node scripts/build.dev.js",
@@ -36,6 +36,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@esbuild-plugins/tsconfig-paths": "^0.1.2",
     "@tsconfig/node14": "^1.0.3",
     "@types/jest": "^27.5.1",
     "@types/markdown-it": "^12.2.3",

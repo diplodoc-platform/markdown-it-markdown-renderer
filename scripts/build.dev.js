@@ -1,14 +1,17 @@
 const esbuild = require('esbuild');
 const nodemon = require('nodemon');
 const path = require('path');
+const {TsconfigPathsPlugin} = require('@esbuild-plugins/tsconfig-paths');
 
 const esbuildConfig = {
+    tsconfig: './tsconfig.json',
     entryPoints: ['./src/playground.ts'],
-    outfile: './dist/index.js',
-    sourcemap: true,
     packages: 'external',
     platform: 'node',
+    target: 'node14',
+    outfile: 'dist/index.js',
     bundle: true,
+    plugins: [TsconfigPathsPlugin({tsconfig: './tsconfig.json'})],
 };
 
 const nodemonConfig = {
