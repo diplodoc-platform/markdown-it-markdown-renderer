@@ -1,39 +1,26 @@
-/* eslint-disable security/detect-child-process */
-const {spawn} = require('child_process');
-const path = require('path');
 const esbuild = require('esbuild');
-const {nodeExternalsPlugin} = require('esbuild-node-externals');
+const nodemon = require('nodemon');
+const path = require('path');
 
-async function handleRebuild(err, result) {
-    if (err) {
-        console.error('watch build failed:', err);
-        return;
-    }
+const esbuildConfig = {
+    entryPoints: ['./src/playground.ts'],
+    outfile: './dist/index.js',
+    sourcemap: true,
+    packages: 'external',
+    platform: 'node',
+    bundle: true,
+};
 
-    console.log('watch build succeeded:', result);
+const nodemonConfig = {
+    script: path.resolve(__dirname, '..', 'dist', 'index.js'),
+    watch: path.resolve(__dirname, '..', 'dist'),
+};
 
-    const source = path.join(process.cwd(), 'dist', 'index.js');
+async function watch(esbuildConfig, nodemonConfig) {
+    const ctx = await esbuild.context(esbuildConfig);
+    await ctx.watch();
 
-    console.log('running:', source, result);
-
-    spawn('node', [source], {
-        stdio: [process.stdin, process.stdout, process.stderr],
-    });
+    nodemon(nodemonConfig);
 }
 
-esbuild
-    .build({
-        entryPoints: ['src/playground.ts'],
-        outfile: 'dist/index.js',
-        bundle: true,
-        format: 'cjs',
-        watch: {
-            onRebuild: handleRebuild,
-        },
-        // minify: true,
-        platform: 'node',
-        sourcemap: true,
-        target: 'node14',
-        plugins: [nodeExternalsPlugin()],
-    })
-    .catch(() => process.exit(1));
+watch(esbuildConfig, nodemonConfig);

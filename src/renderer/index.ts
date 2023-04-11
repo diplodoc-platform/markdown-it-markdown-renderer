@@ -46,7 +46,7 @@ export type MarkdownRendererEnv = {
     source?: string[];
 };
 
-export type State = HeadingState & ImageState & LinkState;
+export type MarkdownRendererState = HeadingState & ImageState & LinkState;
 
 const initRulesState = () => ({
     ...heading.initState(),
