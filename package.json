@@ -20,7 +20,7 @@
     "lib/"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose --coverage --silence=false",
     "test:watch": "jest --watch --coverage --verbose --silent=false",
     "build": "npm run build:clean && tsc -p tsconfig.types.json && node scripts/bundle.js",
     "build:clean": "rm -rf lib",
