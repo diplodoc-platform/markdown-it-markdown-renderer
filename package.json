@@ -24,8 +24,7 @@
     "test:watch": "jest --watch --coverage --verbose --silent=false",
     "build": "npm run build:clean && tsc -p tsconfig.types.json && node scripts/bundle.js",
     "build:clean": "rm -rf lib",
-    "build:dev": "npm run build:dev:clean && npm run build:dev:code",
-    "build:dev:code": "node scripts/build.dev.js",
+    "build:dev": "npm run build:dev:clean && node scripts/development.js",
     "build:dev:clean": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
@@ -36,6 +35,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@es-exec/api": "0.0.5",
     "@esbuild-plugins/tsconfig-paths": "^0.1.2",
     "@tsconfig/node14": "^1.0.3",
     "@types/jest": "^27.5.1",
@@ -50,7 +50,6 @@
     "eslint": "^8.16.0",
     "jest": "^28.1.0",
     "markdown-it": "^13.0.1",
-    "nodemon": "^2.0.22",
     "prettier": "^2.6.2",
     "typescript": "^5.0.4"
   },
