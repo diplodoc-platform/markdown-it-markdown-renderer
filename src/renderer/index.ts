@@ -1,11 +1,6 @@
+import {CustomRenderer, CustomRendererParams} from '@diplodoc/markdown-it-custom-renderer';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
-
-import {
-    CustomRenderer,
-    CustomRendererParams,
-    CustomRendererMode,
-} from '@diplodoc/markdown-it-custom-renderer';
 
 import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
@@ -24,8 +19,6 @@ import image, {ImageState} from 'src/rules/inline/image';
 import link, {LinkState} from 'src/rules/inline/link';
 
 import {NEW_LINE, ONE_SPACE} from './constants';
-
-export const MarkdownRendererMode = CustomRendererMode;
 
 export type MarkdownRendererParams<
     T = {},
@@ -76,19 +69,16 @@ class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends
 
     constructor(params: MarkdownRendererParams<T, CT> = {}) {
         const {
-            initState = () => ({}),
-            handlers,
-            rules,
-            containerRenderers = [],
-            mode,
             constants: {EOL = NEW_LINE, SPACE = ONE_SPACE} = {},
+            containerRenderers = [],
+            initState = () => ({}),
+            rules,
         } = params;
 
         super({
+            ...params,
             rules: {...MarkdownRenderer.defaultRules, ...rules},
-            handlers,
             initState: () => ({...(initState() as T), ...initRulesState()}),
-            mode,
         });
 
         this.EOL = EOL;
@@ -149,6 +139,11 @@ class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends
         return rendered;
     }
 }
+
+export {
+    CustomRendererLifeCycle as MarkdownRendererLifeCycle,
+    CustomRendererMode as MarkdownRendererMode,
+} from '@diplodoc/markdown-it-custom-renderer';
 
 export {MarkdownRenderer};
 export default {MarkdownRenderer};
