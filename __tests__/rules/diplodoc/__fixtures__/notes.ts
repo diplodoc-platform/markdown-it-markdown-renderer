@@ -143,24 +143,50 @@ note with empty title
         section: 'notes',
         number: 9,
     },
-    // TODO: pr into transform to preserve note's map
-    // mappings are needed to render content inside other containers
-    /*
     {
         markdown: `\
-- parent list item
+- parent
+  - nested list item
 
-  {% note info "" %}
+    {% note info "" %}
 
-  - list item one
-  - list item two
+    - list item one
+    - list item two
 
-  {% endnote %}`,
+    {% endnote %}`,
         html: '',
         section: 'notes',
-        number: 9,
+        number: 10,
     },
-    */
+    {
+        markdown: `\
+1. something 1
+   1. other 1
+
+      {% note info "" %}
+
+      - content
+
+      {% endnote %}
+   2. other 2
+2. something 2`,
+        expectedMarkdown: `\
+1. something 1
+   1. other 1
+
+      {% note info "" %}
+
+      - content
+
+      {% endnote %}
+
+
+   2. other 2
+2. something 2`,
+        html: '',
+        section: 'notes',
+        number: 11,
+    },
 ];
 
 export {notes};
