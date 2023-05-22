@@ -15,8 +15,7 @@ const notes: Renderer.RenderRuleRecord = {
 
         rendered += this.EOL;
 
-        // todo: preserve notes map inside transform
-        // rendered += this.renderContainer(token);
+        rendered += this.renderContainer(token);
 
         const type = token.attrGet('note-type');
         if (!type?.length) {
@@ -42,15 +41,23 @@ const notes: Renderer.RenderRuleRecord = {
 
         rendered += this.EOL.repeat(2);
 
-        // todo: preserve notes map inside transform
-        // const token = tokens[i];
-        // rendered += this.renderContainer(token);
+        const token = tokens[i];
+
+        rendered += this.renderContainer(token);
 
         rendered += '{% endnote %}';
 
         rendered += this.EOL;
 
-        if (i + 1 !== tokens.length) {
+        const isList = (container: any) =>
+            container?.type === 'ordered_list_open' || container?.type === 'bullet_list_open';
+
+        const epsilon = this.containers.reduce(
+            (acc, container) => (isList(container) ? acc + 2 : 0),
+            1,
+        );
+
+        if (i + epsilon !== tokens.length) {
             rendered += this.EOL;
         }
 
