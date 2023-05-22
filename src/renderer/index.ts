@@ -4,6 +4,7 @@ import Token from 'markdown-it/lib/token';
 
 import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
+import {diplodoc} from 'src/rules/diplodoc';
 import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';
 import list, {
     renderEmptyListItem,
@@ -53,7 +54,7 @@ const initRulesState = () => ({
 });
 
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {
-    static defaultRules: Renderer.RenderRuleRecord = {...inline, ...block};
+    static defaultRules: Renderer.RenderRuleRecord = {...inline, ...block, ...diplodoc};
     static defaultContainerRenderers: Array<ContainerRenderer<ContainerBase>> = [
         renderEmptyBlockquote,
         renderEmptyListItem,
