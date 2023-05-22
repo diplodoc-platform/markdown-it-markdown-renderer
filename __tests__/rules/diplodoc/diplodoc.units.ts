@@ -26,6 +26,8 @@ describe('diplodoc', () => {
             const expected = normalizeMD(expectedMarkdown ?? markdown);
 
             expect(rendered).toStrictEqual(expected);
+
+            console.log(rendered);
         });
     });
 });
