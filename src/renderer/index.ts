@@ -5,7 +5,11 @@ import Token from 'markdown-it/lib/token';
 import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
 import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';
-import {renderEmptyListItem, renderOrderedList, renderUnorderedList} from 'src/rules/block/list';
+import list, {
+    renderEmptyListItem,
+    renderOrderedList,
+    renderUnorderedList,
+} from 'src/rules/block/list';
 import {
     sameRow,
     aligned,
@@ -45,6 +49,7 @@ const initRulesState = () => ({
     ...heading.initState(),
     ...image.initState(),
     ...link.initState(),
+    ...list.initState(),
 });
 
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {
