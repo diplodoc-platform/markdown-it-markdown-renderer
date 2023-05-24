@@ -13,18 +13,44 @@ export type ContainerOrderedList = ContainerBase & {type: 'ordered_list_open'; o
 
 export type ContainerUnorderedList = ContainerBase & {type: 'bullet_list_open'};
 
+export type ListState = {
+    list: {
+        context: Array<Token['type']>;
+    };
+};
+
+const initState = (): ListState => ({
+    list: {
+        context: new Array<Token['type']>(),
+    },
+});
+
 const list: Renderer.RenderRuleRecord = {
-    bullet_list_open: () => '',
-    bullet_list_close: () => '',
-    ordered_list_open: () => '',
-    ordered_list_close: () => '',
+    bullet_list_open: listOpen,
+    bullet_list_close: listClose,
+    ordered_list_open: listOpen,
+    ordered_list_close: listClose,
     list_item_open: listItemOpen,
     list_item_close: listItemClose,
 };
 
+function listOpen(this: MarkdownRenderer<ListState>, tokens: Token[], i: number) {
+    const type = tokens[i].type;
+
+    this.state.list.context.push(type);
+
+    return '';
+}
+
+function listClose(this: MarkdownRenderer<ListState>) {
+    this.state.list.context.pop();
+
+    return '';
+}
+
 // eslint-disable-next-line complexity
 function listItemOpen(
-    this: MarkdownRenderer,
+    this: MarkdownRenderer<ListState>,
     tokens: Token[],
     i: number,
     options: Options,
@@ -72,7 +98,8 @@ function listItemOpen(
 
     let tspaces = j - col - 1;
 
-    const listType = parseListType(tokens, i);
+    const listCtxLen = this.state.list.context.length;
+    const listType = this.state.list.context[listCtxLen - 1];
 
     let empty = line.slice(col).trimEnd().endsWith(markup);
 
@@ -112,7 +139,6 @@ function listItemOpen(
         }
 
         const order = parseInt(match[1], 10);
-
         if (isNaN(order) || match.index >= col) {
             throw new Error('failed to render list');
         }
@@ -134,20 +160,6 @@ function consumeList(line: string, i: number, container: Container<ContainerBase
     }
 
     return col;
-}
-
-function parseListType(tokens: Token[], i: number) {
-    let cursor = i;
-
-    while (cursor-- >= 0) {
-        if (isList(tokens[cursor])) {
-            return tokens[cursor].type as
-                | ContainerOrderedList['type']
-                | ContainerUnorderedList['type'];
-        }
-    }
-
-    throw new Error('failed to parse list type');
 }
 
 function isList(token: Token | Container<ContainerBase>) {
@@ -342,6 +354,7 @@ function isContainerOrderedList(
 
 export {
     list,
+    initState,
     consumeList,
     isList,
     isOrderedList,
@@ -355,6 +368,7 @@ export {
 
 export default {
     list,
+    initState,
     consumeList,
     isList,
     isOrderedList,
