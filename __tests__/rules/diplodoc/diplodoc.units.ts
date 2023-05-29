@@ -2,6 +2,8 @@
 import MarkdownIt from 'markdown-it';
 // @ts-ignore
 import notes from '@doc-tools/transform/lib/plugins/notes';
+// @ts-ignore
+import cuts from '@doc-tools/transform/lib/plugins/cut';
 
 import {MarkdownRendererEnv} from '../../../src/renderer';
 import {mdRenderer} from '../../../src/plugin';
@@ -12,6 +14,7 @@ import {normalizeMD} from '../../__helpers__';
 const md = new MarkdownIt('commonmark', {html: true});
 
 md.use(notes, {lang: 'en'});
+md.use(cuts, {lang: 'en'});
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
@@ -26,8 +29,6 @@ describe('diplodoc', () => {
             const expected = normalizeMD(expectedMarkdown ?? markdown);
 
             expect(rendered).toStrictEqual(expected);
-
-            console.log(rendered);
         });
     });
 });
