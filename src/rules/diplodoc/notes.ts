@@ -2,7 +2,6 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer} from 'src/renderer';
-import {isList} from 'src/rules/block/list';
 
 const notes: Renderer.RenderRuleRecord = {
     yfm_note_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
@@ -47,13 +46,6 @@ const notes: Renderer.RenderRuleRecord = {
         rendered += this.renderContainer(token);
 
         rendered += '{% endnote %}';
-
-        rendered += this.EOL;
-
-        const closeTokens = this.containers.reduce((n, token) => (isList(token) ? n + 2 : 0), 0);
-        if (i + closeTokens + 1 !== tokens.length) {
-            rendered += this.EOL;
-        }
 
         return rendered;
     },
