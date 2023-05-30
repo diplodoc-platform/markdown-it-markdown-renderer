@@ -2,7 +2,6 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer} from 'src/renderer';
-// import {isList} from 'src/rules/block/list';
 
 const cuts: Renderer.RenderRuleRecord = {
     yfm_cut_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
@@ -12,7 +11,15 @@ const cuts: Renderer.RenderRuleRecord = {
             rendered += this.EOL;
         }
 
-        rendered += this.EOL;
+        if (!this.containers.length) {
+            rendered += this.EOL;
+        }
+
+        if (this.containers.length && i && tokens[i - 1].type !== 'list_item_open') {
+            rendered += this.EOL;
+        }
+
+        rendered += this.renderContainer(tokens[i]);
 
         rendered += '{% cut ';
 
@@ -28,8 +35,14 @@ const cuts: Renderer.RenderRuleRecord = {
 
         return rendered;
     },
-    yfm_cut_content_open: function (this: MarkdownRenderer) {
-        return this.EOL;
+    yfm_cut_content_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
+        let rendered = '';
+
+        rendered += this.EOL;
+
+        rendered += this.renderContainer(tokens[i]);
+
+        return rendered;
     },
     yfm_cut_content_close: function (this: MarkdownRenderer) {
         return this.EOL;
@@ -39,13 +52,9 @@ const cuts: Renderer.RenderRuleRecord = {
 
         rendered += this.EOL;
 
+        rendered += this.renderContainer(tokens[i]);
+
         rendered += '{% endcut %}';
-
-        rendered += this.EOL;
-
-        if (i + 1 !== tokens.length) {
-            rendered += this.EOL;
-        }
 
         return rendered;
     },
