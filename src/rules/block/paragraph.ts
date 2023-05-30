@@ -11,10 +11,11 @@ const separate = new Set([
     'bullet_list_close',
     'ordered_list_close',
     'html_block',
+    'yfm_cut_close',
     'yfm_note_close',
 ]);
 
-const diplodocBlocks = new Set(['yfm_note_close']);
+const diplodocBlocks = new Set(['yfm_cut_close', 'yfm_note_close']);
 
 const paragraph: Renderer.RenderRuleRecord = {
     paragraph_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
