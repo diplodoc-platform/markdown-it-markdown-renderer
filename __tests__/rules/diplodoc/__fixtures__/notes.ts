@@ -170,19 +170,6 @@ note with empty title
       {% endnote %}
    2. other 2
 2. something 2`,
-        expectedMarkdown: `\
-1. something 1
-   1. other 1
-
-      {% note info "" %}
-
-      - content
-
-      {% endnote %}
-
-
-   2. other 2
-2. something 2`,
         html: '',
         section: 'notes',
         number: 11,
