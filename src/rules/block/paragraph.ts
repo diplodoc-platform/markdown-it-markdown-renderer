@@ -5,12 +5,16 @@ import {MarkdownRenderer} from 'src/renderer';
 
 const interrupters = new Set(['hr', 'heading_close', 'code_block', 'fence']);
 
+// todo: refactor into DI in the rule factory/renderer itself
 const separate = new Set([
     'paragraph_close',
     'bullet_list_close',
     'ordered_list_close',
     'html_block',
+    'yfm_note_close',
 ]);
+
+const diplodocBlocks = new Set(['yfm_note_close']);
 
 const paragraph: Renderer.RenderRuleRecord = {
     paragraph_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
@@ -32,7 +36,8 @@ const paragraph: Renderer.RenderRuleRecord = {
         if (!previous) {
             throw new Error('failed to rendrer paragraphi');
         }
-        if (!previous.block) {
+
+        if (!previous.block && !diplodocBlocks.has(previous.type)) {
             return '';
         }
 
