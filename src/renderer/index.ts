@@ -23,6 +23,9 @@ import heading, {HeadingState} from 'src/rules/block/heading';
 import image, {ImageState} from 'src/rules/inline/image';
 import link, {LinkState} from 'src/rules/inline/link';
 
+// plugins
+import GFMTable, {GFMTableState} from 'src/rules/diplodoc/gfm-tables';
+
 import {NEW_LINE, ONE_SPACE} from './constants';
 
 export type MarkdownRendererParams<
@@ -44,13 +47,14 @@ export type MarkdownRendererEnv = {
     source?: string[];
 };
 
-export type MarkdownRendererState = HeadingState & ImageState & LinkState;
+export type MarkdownRendererState = HeadingState & ImageState & LinkState & GFMTableState;
 
 const initRulesState = () => ({
     ...heading.initState(),
     ...image.initState(),
     ...link.initState(),
     ...list.initState(),
+    ...GFMTable.initState(),
 });
 
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {
