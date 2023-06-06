@@ -27,7 +27,10 @@ const gfmTables: Renderer.RenderRuleRecord = {
     table_open: function (this: MarkdownRenderer<GFMTableState>, tokens: Token[], i: number) {
         let rendered = '';
 
-        if (i) {
+        const insideNonListContainer =
+            this.containers.length && tokens[i - 1].type !== 'list_item_open';
+
+        if ((i && !this.containers.length) || insideNonListContainer) {
             rendered += this.EOL;
         }
 
@@ -40,12 +43,18 @@ const gfmTables: Renderer.RenderRuleRecord = {
 
         return rendered;
     },
-    tr_open: alwaysEmptyStr,
+    tr_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
+        let rendered = '';
+
+        rendered += this.renderContainer(tokens[i]);
+
+        return rendered;
+    },
     tr_close: function (this: MarkdownRenderer) {
         return this.EOL;
     },
     th_open: always('|'),
-    th_close: function (tokens: Token[], i: number) {
+    th_close: function (this: MarkdownRenderer, tokens: Token[], i: number) {
         let rendered = '';
 
         if (i + 1 === tokens.length || tokens[i + 1].type !== 'th_open') {
@@ -101,5 +110,9 @@ const gfmTables: Renderer.RenderRuleRecord = {
     table_close: alwaysEmptyStr,
 };
 
-export {gfmTables, initState};
-export default {gfmTables, initState};
+function isTableRowOpen(token: Token) {
+    return token.type === 'tr_open';
+}
+
+export {gfmTables, initState, isTableRowOpen};
+export default {gfmTables, initState, isTableRowOpen};
