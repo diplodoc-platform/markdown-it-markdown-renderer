@@ -11,7 +11,7 @@ import {tests, SpecEntry} from './__fixtures__';
 
 import {normalizeMD} from '../../__helpers__';
 
-const md = new MarkdownIt('commonmark', {html: true});
+const md = new MarkdownIt({html: true});
 
 md.use(notes, {lang: 'en'});
 md.use(cuts, {lang: 'en'});
