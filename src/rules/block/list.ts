@@ -9,6 +9,9 @@ import {isCode} from 'src/rules/block/code';
 import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
 
+// diplodoc
+import {isTableRowOpen} from 'src/rules/diplodoc/gfm-tables';
+
 export type ContainerOrderedList = ContainerBase & {type: 'ordered_list_open'; order: number};
 
 export type ContainerUnorderedList = ContainerBase & {type: 'bullet_list_open'};
@@ -16,12 +19,14 @@ export type ContainerUnorderedList = ContainerBase & {type: 'bullet_list_open'};
 export type ListState = {
     list: {
         context: Array<Token['type']>;
+        last: Array<Token>;
     };
 };
 
 const initState = (): ListState => ({
     list: {
         context: new Array<Token['type']>(),
+        last: new Array<Token>(),
     },
 });
 
@@ -178,7 +183,7 @@ function isListItemClose(token: Token) {
     return token?.type === 'list_item_close';
 }
 
-function listItemClose(this: MarkdownRenderer, tokens: Token[], i: number) {
+function listItemClose(this: MarkdownRenderer<ListState>, tokens: Token[], i: number) {
     let rendered = '';
 
     const containersLen = this.containers.length;
@@ -188,6 +193,10 @@ function listItemClose(this: MarkdownRenderer, tokens: Token[], i: number) {
     }
 
     this.containers.pop();
+
+    if (tokens[i - 1]) {
+        this.state.list.last.push(tokens[i - 1]);
+    }
 
     return rendered;
 }
@@ -218,7 +227,7 @@ function renderEmptyListItem<CT extends ContainerBase>(
 }
 
 function renderOrderedList<CT extends ContainerBase>(
-    this: MarkdownRenderer,
+    this: MarkdownRenderer<ListState>,
     containers: Container<CT>[],
     i: number,
     caller: Token,
@@ -238,6 +247,13 @@ function renderOrderedList<CT extends ContainerBase>(
                 const codeFstLine = caller.content.split('\n')[0] ?? '';
 
                 codeIndent = codeFstLine.length - codeFstLine.trim().length;
+            }
+
+            if (isTableRowOpen(caller)) {
+                const last = this.state.list.last.pop();
+                if (last?.type === 'paragraph_close') {
+                    rendered += this.EOL;
+                }
             }
 
             rendered += container.order;
@@ -292,7 +308,7 @@ function renderOrderedList<CT extends ContainerBase>(
 }
 
 function renderUnorderedList<CT extends ContainerBase>(
-    this: MarkdownRenderer,
+    this: MarkdownRenderer<ListState>,
     containers: Container<CT>[],
     i: number,
     caller: Token,
@@ -305,6 +321,13 @@ function renderUnorderedList<CT extends ContainerBase>(
     if (isUnorderedList(container) && !empty) {
         if (isFst(container, caller) && !isEmpty(container)) {
             // console.info('unordered fst not empty');
+            if (isTableRowOpen(caller)) {
+                const last = this.state.list.last.pop();
+                if (last?.type === 'paragraph_close') {
+                    rendered += this.EOL;
+                }
+            }
+
             rendered += container.markup;
             rendered += this.SPACE.repeat(container.tspaces);
         } else if (isTail(container, caller)) {
