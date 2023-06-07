@@ -11,6 +11,7 @@ import list, {
     renderOrderedList,
     renderUnorderedList,
 } from 'src/rules/block/list';
+import tabs, {TabsState} from 'src/rules/diplodoc/tabs';
 import {
     sameRow,
     aligned,
@@ -44,13 +45,14 @@ export type MarkdownRendererEnv = {
     source?: string[];
 };
 
-export type MarkdownRendererState = HeadingState & ImageState & LinkState;
+export type MarkdownRendererState = HeadingState & ImageState & LinkState & TabsState;
 
 const initRulesState = () => ({
     ...heading.initState(),
     ...image.initState(),
     ...link.initState(),
     ...list.initState(),
+    ...tabs.initState(),
 });
 
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {

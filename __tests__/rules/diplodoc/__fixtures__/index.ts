@@ -1,5 +1,6 @@
 import {notes} from './notes';
 import {cuts} from './cuts';
+import {tabs} from './tabs';
 
 export type SpecEntry = {
     markdown: string;
@@ -9,7 +10,7 @@ export type SpecEntry = {
     html: string;
 };
 
-const tests: SpecEntry[] = [...notes, ...cuts];
+const tests: SpecEntry[] = [...tabs];
 
 export {tests};
 export default {tests};

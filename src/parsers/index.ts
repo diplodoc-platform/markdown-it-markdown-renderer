@@ -1,3 +1,5 @@
+import Token from 'markdown-it/lib/token';
+
 function skipChars(str: string, chars: string[], start = 0) {
     const checkCharsInLine = charsCheck(str);
     const len = str.length;
@@ -16,5 +18,13 @@ function charsCheck(str: string) {
     return (i: number) => (ch: string) => str.charAt(i) === ch;
 }
 
-export {skipChars};
-export default {skipChars};
+function hide(token: Token) {
+    token.hidden = true;
+
+    token.children?.forEach((child) => {
+        child.hidden = true;
+    });
+}
+
+export {skipChars, hide};
+export default {skipChars, hide};

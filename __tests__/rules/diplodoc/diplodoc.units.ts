@@ -8,14 +8,25 @@ import cuts from '@doc-tools/transform/lib/plugins/cut';
 import {MarkdownRendererEnv} from '../../../src/renderer';
 import {mdRenderer} from '../../../src/plugin';
 import {tests, SpecEntry} from './__fixtures__';
-
+import tabs from '@doc-tools/transform/lib/plugins/tabs';
 import {normalizeMD} from '../../__helpers__';
 
 const md = new MarkdownIt('commonmark', {html: true});
 
 md.use(notes, {lang: 'en'});
 md.use(cuts, {lang: 'en'});
+md.use(tabs, {lang: 'en'});
 md.use(mdRenderer);
+
+const jestConsole = console;
+
+beforeEach(() => {
+    global.console = require('console');
+});
+
+afterEach(() => {
+    global.console = jestConsole;
+});
 
 describe('diplodoc', () => {
     tests.forEach(({section, number, markdown, expectedMarkdown}: SpecEntry) => {
@@ -27,6 +38,8 @@ describe('diplodoc', () => {
             // expected render is the original markdown
             // fallbacks to specified expectedMarkdown fixture
             const expected = normalizeMD(expectedMarkdown ?? markdown);
+
+            console.log(`Rendered: `, '\n', rendered);
 
             expect(rendered).toStrictEqual(expected);
         });
