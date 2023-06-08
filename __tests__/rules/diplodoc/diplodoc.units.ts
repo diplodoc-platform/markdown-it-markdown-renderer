@@ -4,6 +4,8 @@ import MarkdownIt from 'markdown-it';
 import notes from '@doc-tools/transform/lib/plugins/notes';
 // @ts-ignore
 import cuts from '@doc-tools/transform/lib/plugins/cut';
+// @ts-ignore
+import sup from 'markdown-it-sup';
 
 import {MarkdownRendererEnv} from '../../../src/renderer';
 import {mdRenderer} from '../../../src/plugin';
@@ -15,6 +17,7 @@ const md = new MarkdownIt({html: true});
 
 md.use(notes, {lang: 'en'});
 md.use(cuts, {lang: 'en'});
+md.use(sup);
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
