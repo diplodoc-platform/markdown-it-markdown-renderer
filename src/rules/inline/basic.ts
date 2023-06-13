@@ -7,6 +7,8 @@ const rules = new Set([
     'strong_close',
     'sup_open',
     'sup_close',
+    'monospace_open',
+    'monospace_close',
 ]);
 
 function basic(tokens: Token[], i: number) {
