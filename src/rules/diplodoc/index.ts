@@ -5,6 +5,7 @@ import {cuts} from './cuts';
 import {gfmTables} from './gfm-tables';
 import {sup} from './sup';
 import {monospace} from './monospace';
+import {checkbox} from './checkbox';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -12,6 +13,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...gfmTables,
     ...sup,
     ...monospace,
+    ...checkbox,
 };
 
 export {diplodoc};
