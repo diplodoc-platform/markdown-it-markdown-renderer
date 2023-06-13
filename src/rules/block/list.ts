@@ -183,6 +183,14 @@ function isListItemClose(token: Token) {
     return token?.type === 'list_item_close';
 }
 
+function isOrderedListClose(token: Token) {
+    return token?.type === 'ordered_list_close';
+}
+
+function isUnorderedListClose(token: Token) {
+    return token?.type === 'bullet_list_close';
+}
+
 function listItemClose(this: MarkdownRenderer<ListState>, tokens: Token[], i: number) {
     let rendered = '';
 
@@ -381,7 +389,9 @@ export {
     consumeList,
     isList,
     isOrderedList,
+    isOrderedListClose,
     isUnorderedList,
+    isUnorderedListClose,
     isListItemClose,
     isContainerOrderedList,
     renderEmptyListItem,
@@ -395,7 +405,9 @@ export default {
     consumeList,
     isList,
     isOrderedList,
+    isOrderedListClose,
     isUnorderedList,
+    isUnorderedListClose,
     isListItemClose,
     isContainerOrderedList,
     renderEmptyListItem,
