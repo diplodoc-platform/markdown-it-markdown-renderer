@@ -9,6 +9,9 @@ import monospace from '@doc-tools/transform/lib/plugins/monospace';
 // @ts-ignore
 import checkbox from '@doc-tools/transform/lib/plugins/checkbox';
 // @ts-ignore
+import anchors from '@doc-tools/transform/lib/plugins/anchors';
+
+// @ts-ignore
 import sup from 'markdown-it-sup';
 
 import {MarkdownRendererEnv} from '../../../src/renderer';
@@ -24,6 +27,7 @@ md.use(cuts, {lang: 'en'});
 md.use(sup);
 md.use(monospace);
 md.use(checkbox);
+md.use(anchors, {});
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
