@@ -5,6 +5,7 @@ import {sup} from './sup';
 import {monospace} from './monospace';
 import {checkbox} from './checkbox';
 import {anchors} from './anchors';
+import {imsize} from './imsize';
 
 export type SpecEntry = {
     markdown: string;
@@ -22,6 +23,7 @@ const tests: SpecEntry[] = [
     ...monospace,
     ...checkbox,
     ...anchors,
+    ...imsize,
 ];
 
 export {tests};
