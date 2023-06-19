@@ -10,6 +10,8 @@ import monospace from '@doc-tools/transform/lib/plugins/monospace';
 import checkbox from '@doc-tools/transform/lib/plugins/checkbox';
 // @ts-ignore
 import anchors from '@doc-tools/transform/lib/plugins/anchors';
+// @ts-ignore
+import imsize from '@doc-tools/transform/lib/plugins/imsize';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -28,6 +30,7 @@ md.use(sup);
 md.use(monospace);
 md.use(checkbox);
 md.use(anchors, {});
+md.use(imsize);
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
