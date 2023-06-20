@@ -7,6 +7,7 @@ import {sup} from './sup';
 import {monospace} from './monospace';
 import {checkbox} from './checkbox';
 import {imsize} from './imsize';
+import {file} from './file';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -16,6 +17,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...monospace,
     ...checkbox,
     ...imsize,
+    ...file,
 };
 
 export {diplodoc};

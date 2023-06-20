@@ -12,6 +12,8 @@ import checkbox from '@doc-tools/transform/lib/plugins/checkbox';
 import anchors from '@doc-tools/transform/lib/plugins/anchors';
 // @ts-ignore
 import imsize from '@doc-tools/transform/lib/plugins/imsize';
+// @ts-ignore
+import file from '@doc-tools/transform/lib/plugins/file';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -29,6 +31,7 @@ md.use(cuts, {lang: 'en'});
 md.use(sup);
 md.use(monospace);
 md.use(checkbox);
+md.use(file);
 md.use(anchors, {});
 md.use(imsize);
 md.use(mdRenderer);
