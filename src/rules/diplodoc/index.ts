@@ -8,6 +8,7 @@ import {monospace} from './monospace';
 import {checkbox} from './checkbox';
 import {imsize} from './imsize';
 import {file} from './file';
+import {strikethrough} from './strikethrough';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -18,6 +19,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...checkbox,
     ...imsize,
     ...file,
+    ...strikethrough,
 };
 
 export {diplodoc};

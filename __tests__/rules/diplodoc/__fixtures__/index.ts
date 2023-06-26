@@ -7,6 +7,7 @@ import {checkbox} from './checkbox';
 import {anchors} from './anchors';
 import {imsize} from './imsize';
 import {file} from './file';
+import {strikethrough} from './strikethrough';
 
 export type SpecEntry = {
     markdown: string;
@@ -26,6 +27,7 @@ const tests: SpecEntry[] = [
     ...anchors,
     ...imsize,
     ...file,
+    ...strikethrough,
 ];
 
 export {tests};

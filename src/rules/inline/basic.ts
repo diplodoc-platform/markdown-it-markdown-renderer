@@ -9,6 +9,8 @@ const rules = new Set([
     'sup_close',
     'monospace_open',
     'monospace_close',
+    's_open',
+    's_close',
 ]);
 
 function basic(tokens: Token[], i: number) {
