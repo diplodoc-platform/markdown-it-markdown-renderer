@@ -2,6 +2,7 @@ import {
     CustomRenderer,
     CustomRendererParams,
     CustomRendererHanlders,
+    CustomRendererHooks,
 } from '@diplodoc/markdown-it-custom-renderer';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
@@ -10,6 +11,7 @@ import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
 import {diplodoc as diplodocRules} from 'src/rules/diplodoc';
 import {diplodoc as diplodocHandlers} from 'src/handlers/diplodoc';
+import {diplodoc as diplodocHooks} from 'src/hooks/diplodoc';
 import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';
 import list, {
     renderEmptyListItem,
@@ -65,6 +67,7 @@ const initRulesState = () => ({
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {
     static defaultRules: Renderer.RenderRuleRecord = {...inline, ...block, ...diplodocRules};
     static defaultHandlers: CustomRendererHanlders = {...diplodocHandlers};
+    static defaultHooks: CustomRendererHooks = {...diplodocHooks};
     static defaultContainerRenderers: Array<ContainerRenderer<ContainerBase>> = [
         renderEmptyBlockquote,
         renderEmptyListItem,
@@ -90,6 +93,7 @@ class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends
             initState = () => ({}),
             rules,
             handlers,
+            hooks,
         } = params;
 
         super({
@@ -97,6 +101,7 @@ class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends
             handlers: {...MarkdownRenderer.defaultHandlers, ...handlers},
             rules: {...MarkdownRenderer.defaultRules, ...rules},
             initState: () => ({...(initState() as T), ...initRulesState()}),
+            hooks: {...MarkdownRenderer.defaultHooks, ...hooks},
         });
 
         this.EOL = EOL;
