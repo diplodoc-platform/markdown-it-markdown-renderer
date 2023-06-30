@@ -9,6 +9,7 @@ import {checkbox} from './checkbox';
 import {imsize} from './imsize';
 import {file} from './file';
 import {strikethrough} from './strikethrough';
+import {tabs} from './tabs';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -20,6 +21,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...imsize,
     ...file,
     ...strikethrough,
+    ...tabs,
 };
 
 export {diplodoc};
