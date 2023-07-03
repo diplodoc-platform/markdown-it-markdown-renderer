@@ -14,6 +14,8 @@ import anchors from '@doc-tools/transform/lib/plugins/anchors';
 import imsize from '@doc-tools/transform/lib/plugins/imsize';
 // @ts-ignore
 import file from '@doc-tools/transform/lib/plugins/file';
+// @ts-ignore
+import term from '@doc-tools/transform/lib/plugins/term';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -34,6 +36,7 @@ md.use(checkbox);
 md.use(file);
 md.use(anchors, {});
 md.use(imsize);
+md.use(term, {isLintRun: false});
 md.use(mdRenderer);
 
 describe('diplodoc', () => {

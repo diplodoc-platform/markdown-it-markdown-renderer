@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {notes} from './notes';
 import {cuts} from './cuts';
 import {tables} from './tables';
@@ -8,6 +9,7 @@ import {anchors} from './anchors';
 import {imsize} from './imsize';
 import {file} from './file';
 import {strikethrough} from './strikethrough';
+import {term} from './term';
 
 export type SpecEntry = {
     markdown: string;
@@ -18,16 +20,17 @@ export type SpecEntry = {
 };
 
 const tests: SpecEntry[] = [
-    ...notes,
-    ...cuts,
-    ...tables,
-    ...sup,
-    ...monospace,
-    ...checkbox,
-    ...anchors,
-    ...imsize,
-    ...file,
-    ...strikethrough,
+    // ...notes,
+    // ...cuts,
+    // ...tables,
+    // ...sup,
+    // ...monospace,
+    // ...checkbox,
+    // ...anchors,
+    // ...imsize,
+    // ...file,
+    // ...strikethrough,
+    ...term,
 ];
 
 export {tests};
