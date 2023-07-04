@@ -2,7 +2,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 import {MarkdownRenderer} from 'src/renderer';
 
-type TermState = {
+export type TermState = {
     term: {
         pending: Array<string>;
     };
@@ -33,6 +33,15 @@ const term: Renderer.RenderRuleRecord = {
         rendered += `(*${key})`;
 
         return rendered;
+    },
+    template_open: function (this: MarkdownRenderer<TermState>, tokens: Token[], i: number) {
+        const key = tokens[i].attrGet('label');
+        const rendered = this.EOL.repeat(2) + `[*${key}]: `;
+
+        return rendered;
+    },
+    template_close: function (this: MarkdownRenderer<TermState>) {
+        return this.EOL;
     },
 };
 

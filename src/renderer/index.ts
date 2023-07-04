@@ -32,7 +32,7 @@ import link, {LinkState} from 'src/rules/inline/link';
 import GFMTable, {GFMTableState} from 'src/rules/diplodoc/gfm-tables';
 
 import {NEW_LINE, ONE_SPACE} from './constants';
-import term from 'src/rules/diplodoc/term';
+import term, {TermState} from 'src/rules/diplodoc/term';
 
 export type MarkdownRendererParams<
     T = {},
@@ -54,7 +54,11 @@ export type MarkdownRendererEnv = {
     terms?: Record<string, string>;
 };
 
-export type MarkdownRendererState = HeadingState & ImageState & LinkState & GFMTableState;
+export type MarkdownRendererState = HeadingState &
+    ImageState &
+    LinkState &
+    GFMTableState &
+    TermState;
 
 const initRulesState = () => ({
     ...heading.initState(),
@@ -65,7 +69,10 @@ const initRulesState = () => ({
     ...term.initState(),
 });
 
-class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {
+class MarkdownRenderer<
+    T = MarkdownRendererState,
+    CT extends ContainerBase = ContainerBase,
+> extends CustomRenderer<T> {
     static defaultRules: Renderer.RenderRuleRecord = {...inline, ...block, ...diplodocRules};
     static defaultHandlers: CustomRendererHanlders = {...diplodocHandlers};
     static defaultContainerRenderers: Array<ContainerRenderer<ContainerBase>> = [

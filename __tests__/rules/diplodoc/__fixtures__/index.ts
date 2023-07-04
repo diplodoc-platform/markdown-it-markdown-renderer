@@ -20,16 +20,16 @@ export type SpecEntry = {
 };
 
 const tests: SpecEntry[] = [
-    // ...notes,
-    // ...cuts,
-    // ...tables,
-    // ...sup,
-    // ...monospace,
-    // ...checkbox,
-    // ...anchors,
-    // ...imsize,
-    // ...file,
-    // ...strikethrough,
+    ...notes,
+    ...cuts,
+    ...tables,
+    ...sup,
+    ...monospace,
+    ...checkbox,
+    ...anchors,
+    ...imsize,
+    ...file,
+    ...strikethrough,
     ...term,
 ];
 
