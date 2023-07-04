@@ -49,7 +49,7 @@ describe('diplodoc', () => {
             // expected render is the original markdown
             // fallbacks to specified expectedMarkdown fixture
             const expected = normalizeMD(expectedMarkdown ?? markdown);
-            // console.log(rendered);
+
             expect(rendered).toStrictEqual(expected);
         });
     });
