@@ -15,7 +15,9 @@ import imsize from '@doc-tools/transform/lib/plugins/imsize';
 // @ts-ignore
 import file from '@doc-tools/transform/lib/plugins/file';
 // @ts-ignore
-import term from '@doc-tools/transform/lib/plugins/term';
+import tabs from '@doc-tools/transform/lib/plugins/tabs';
+// @ts-ignore
+import video from '@doc-tools/transform/lib/plugins/video';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -36,7 +38,9 @@ md.use(checkbox);
 md.use(file);
 md.use(anchors, {});
 md.use(imsize);
-md.use(term, {isLintRun: false});
+md.use(tabs);
+md.use(video);
+
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
@@ -46,6 +50,7 @@ describe('diplodoc', () => {
         test(name, () => {
             const env: MarkdownRendererEnv = {source: markdown.split('\n')};
             const rendered = normalizeMD(md.render(markdown, env));
+            console.log(rendered);
             // expected render is the original markdown
             // fallbacks to specified expectedMarkdown fixture
             const expected = normalizeMD(expectedMarkdown ?? markdown);

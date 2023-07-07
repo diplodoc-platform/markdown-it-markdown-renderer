@@ -14,6 +14,11 @@ const initState = (): TermState => ({
     },
 });
 
+const allways =
+    <T>(value: T) =>
+    (): T =>
+        value;
+
 const term: Renderer.RenderRuleRecord = {
     term_open: function (this: MarkdownRenderer<TermState>, tokens: Token[], i: number) {
         const key = tokens[i].attrGet('term-key')?.slice(1);
@@ -43,6 +48,8 @@ const term: Renderer.RenderRuleRecord = {
     template_close: function (this: MarkdownRenderer<TermState>) {
         return this.EOL;
     },
+    dfn_open: allways(''),
+    dfn_close: allways(''),
 };
 
 export {term, initState};
