@@ -1,6 +1,6 @@
 {
   "name": "@diplodoc/markdown-it-markdown-renderer",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "render markdown-it tokens into markdown",
   "homepage": "https://github.com/diplodoc-platform/markdown-it-markdown-renderer",
   "bugs": {
