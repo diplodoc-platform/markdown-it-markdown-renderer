@@ -9,6 +9,7 @@ import {imsize} from './imsize';
 import {file} from './file';
 import {strikethrough} from './strikethrough';
 import {tabs} from './tabs';
+import {video} from './video';
 
 export type SpecEntry = {
     markdown: string;
@@ -30,6 +31,7 @@ const tests: SpecEntry[] = [
     ...file,
     ...strikethrough,
     ...tabs,
+    ...video,
 ];
 
 export {tests};
