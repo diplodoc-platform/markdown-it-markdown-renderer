@@ -10,6 +10,7 @@ import {imsize} from './imsize';
 import {file} from './file';
 import {strikethrough} from './strikethrough';
 import {tabs} from './tabs';
+import {video} from './video';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -22,6 +23,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...file,
     ...strikethrough,
     ...tabs,
+    ...video,
 };
 
 export {diplodoc};

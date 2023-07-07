@@ -16,6 +16,8 @@ import imsize from '@doc-tools/transform/lib/plugins/imsize';
 import file from '@doc-tools/transform/lib/plugins/file';
 // @ts-ignore
 import tabs from '@doc-tools/transform/lib/plugins/tabs';
+// @ts-ignore
+import video from '@doc-tools/transform/lib/plugins/video';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -37,6 +39,8 @@ md.use(file);
 md.use(anchors, {});
 md.use(imsize);
 md.use(tabs);
+md.use(video);
+
 md.use(mdRenderer);
 
 describe('diplodoc', () => {
