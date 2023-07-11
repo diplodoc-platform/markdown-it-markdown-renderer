@@ -46,7 +46,7 @@ const term: Renderer.RenderRuleRecord = {
         return rendered;
     },
     template_close: function (this: MarkdownRenderer<TermState>) {
-        return this.EOL;
+        return this.EOL.repeat(2);
     },
     dfn_open: allways(''),
     dfn_close: allways(''),
