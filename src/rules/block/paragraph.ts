@@ -43,7 +43,10 @@ const paragraph: Renderer.RenderRuleRecord = {
         }
 
         // vertical gap rendering
-        if (interrupters.has(previous.type)) {
+        // prevent extra new line after table cell open
+        if (previous.type === 'yfm_td_open') {
+            return this.renderContainer(current);
+        } else if (interrupters.has(previous.type)) {
             rendered += this.EOL;
         } else {
             if (previous.type === 'blockquote_close') {
