@@ -11,6 +11,7 @@ import {file} from './file';
 import {strikethrough} from './strikethrough';
 import {tabs} from './tabs';
 import {video} from './video';
+import {multilineTables} from './multiline-tables';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -24,6 +25,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...strikethrough,
     ...tabs,
     ...video,
+    ...multilineTables,
 };
 
 export {diplodoc};
