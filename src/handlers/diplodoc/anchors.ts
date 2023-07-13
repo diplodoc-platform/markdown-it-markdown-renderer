@@ -21,9 +21,15 @@ const anchors = {
             return '';
         }
 
-        next.children = (next.children ?? []).filter((token: Token) => {
-            return token?.type !== 'link_open' && token?.type !== 'link_close';
-        });
+        if (!next.children) {
+            next.children = [];
+        }
+
+        const anchorLinkStartIdx = next.children.findIndex(({type}) => type === 'link_open');
+        const anchorLinkEndtIdx = next.children.findIndex(({type}) => type === 'link_close');
+        if (anchorLinkEndtIdx !== -1 && anchorLinkStartIdx !== -1) {
+            next.children.splice(anchorLinkStartIdx, anchorLinkEndtIdx - anchorLinkStartIdx + 1);
+        }
 
         const [row] = tokens[i].map ?? [];
         // eslint-disable-next-line eqeqeq, no-eq-null
