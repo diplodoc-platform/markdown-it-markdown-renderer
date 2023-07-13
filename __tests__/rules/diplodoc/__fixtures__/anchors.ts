@@ -11,6 +11,12 @@ const anchors = [
         number: 2,
         html: '',
     },
+    {
+        markdown: `# explicit anchor [link inside header](file.md) {#anchor}`,
+        section: 'anchors',
+        number: 3,
+        html: '',
+    },
 ];
 
 export {anchors};
