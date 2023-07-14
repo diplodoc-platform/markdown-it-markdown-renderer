@@ -9,7 +9,7 @@ const always =
 
 const alwaysEmptyStr = always('');
 
-const interrupters = new Set(['yfm_td_close', 'bullet_list_open', 'ordered_list_open']);
+const cellOpenInterrupters = new Set(['yfm_td_close', 'bullet_list_open', 'ordered_list_open']);
 
 const multilineTables: Renderer.RenderRuleRecord = {
     yfm_tbody_open: alwaysEmptyStr,
@@ -33,6 +33,17 @@ const multilineTables: Renderer.RenderRuleRecord = {
         rendered += this.renderContainer(tokens[i]);
 
         rendered += '|#';
+
+        const next: Token | undefined = tokens[i + 1];
+        const nextnext: Token | undefined = tokens[i + 2];
+        const shouldntSeparate =
+            nextnext?.type === 'bullet_list_close' ||
+            nextnext?.type === 'ordered_list_close' ||
+            next?.type === 'yfm_td_close';
+
+        if (!shouldntSeparate) {
+            rendered += this.EOL;
+        }
 
         return rendered;
     },
@@ -60,7 +71,7 @@ const multilineTables: Renderer.RenderRuleRecord = {
             return rendered;
         }
 
-        if (!interrupters.has(next.type)) {
+        if (!cellOpenInterrupters.has(next.type)) {
             rendered += '\n';
         }
 
