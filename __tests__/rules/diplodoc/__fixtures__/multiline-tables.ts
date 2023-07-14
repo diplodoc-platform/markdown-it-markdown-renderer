@@ -42,7 +42,7 @@ Text
     },
     {
         markdown: `\
-paragraph
+before
 
 #|
 |||
@@ -54,6 +54,8 @@ cell above is empty
 cell above has header
 ||
 |#
+
+after
 `,
         html: '',
         section: 'multiline-tables',
@@ -75,6 +77,8 @@ cell above has header
   content 2
   ||
   |#
+
+  text after multiline table inside list
 `,
         html: '',
         section: 'multiline-tables',
@@ -98,7 +102,7 @@ content before unordered list
   ||
   |#
 
-content after unordered list
+content after unordered list with multiline table
 1. hello
 2. hello
 
@@ -116,7 +120,7 @@ content after unordered list
    ||
    |#
 
-content after ordered list
+content after ordered list with multiline table
 `,
         html: '',
         section: 'multiline-tables',
