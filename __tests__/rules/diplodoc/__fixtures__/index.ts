@@ -11,6 +11,7 @@ import {strikethrough} from './strikethrough';
 import {tabs} from './tabs';
 import {video} from './video';
 import {multilineTables} from './multiline-tables';
+import {term} from './term';
 
 export type SpecEntry = {
     markdown: string;
@@ -34,6 +35,7 @@ const tests: SpecEntry[] = [
     ...tabs,
     ...video,
     ...multilineTables,
+    ...term,
 ];
 
 export {tests};

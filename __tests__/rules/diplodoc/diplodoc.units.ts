@@ -20,6 +20,8 @@ import tabs from '@doc-tools/transform/lib/plugins/tabs';
 import video from '@doc-tools/transform/lib/plugins/video';
 // @ts-ignore
 import table from '@doc-tools/transform/lib/plugins/table';
+// @ts-ignore
+import term from '@doc-tools/transform/lib/plugins/term';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
@@ -43,6 +45,7 @@ md.use(imsize);
 md.use(tabs);
 md.use(video);
 md.use(table);
+md.use(term, {isLintRun: false});
 
 md.use(mdRenderer);
 
