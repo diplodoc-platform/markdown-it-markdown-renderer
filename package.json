@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@diplodoc/markdown-it-custom-renderer": "0.0.1",
-    "@doc-tools/transform": "3.4.0",
+    "@doc-tools/transform": "^3.8.0",
     "markdown-it-sup": "^1.0.0"
   }
 }
