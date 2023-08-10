@@ -45,6 +45,23 @@ text after
         section: 'tabs',
         number: 2,
     },
+    {
+        markdown: `
+{% list tabs %}
+
+* tab title 1
+
+  tab content
+* tab title 2
+
+  tab content
+
+{% endlist %}
+`,
+        html: '',
+        section: 'tabs',
+        number: 3,
+    },
 ];
 
 export {tabs};
