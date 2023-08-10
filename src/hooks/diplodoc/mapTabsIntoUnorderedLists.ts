@@ -20,7 +20,6 @@ function mapTabsIntoUnorderedLists(parameters: CustomRendererHookParameters) {
 
         if (token.type === 'tab_open') {
             parameters.tokens[i].type = 'list_item_open';
-            parameters.tokens[i].markup = '-';
 
             const paragraphOpen = new Token('paragraph_open', '', 0);
             const paragraphClose = new Token('paragraph_close', '', 0);
