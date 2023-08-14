@@ -3,6 +3,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 
 const always =
     <T>(a: T) =>
@@ -84,7 +85,7 @@ const gfmTables: Renderer.RenderRuleRecord = {
 
         const [_, end] = theader.map;
 
-        const format = source[end];
+        const format = normalizeSource(source)[end];
         if (!format.length) {
             throw new Error('failed to render GFM Table, header formatting not found');
         }

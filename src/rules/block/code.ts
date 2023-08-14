@@ -3,6 +3,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 import {getMap} from 'src/token';
 
 const separate = new Set(['html_block', 'paragraph_close', 'bullet_list_close']);
@@ -32,7 +33,7 @@ const code: Renderer.RenderRuleRecord = {
         const [start, end] = getMap(tokens[i]);
         const {source} = env;
         if (source) {
-            const [first] = source.slice(start, end);
+            const [first] = normalizeSource(source).slice(start, end);
 
             const spaces = first.length - first.trimStart().length;
 

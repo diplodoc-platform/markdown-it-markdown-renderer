@@ -3,6 +3,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
 
@@ -41,7 +42,7 @@ function fenceHandler(
     if (end > start && source?.length) {
         const fenceLength = end - start;
 
-        const fenceLines = source.slice(start, end);
+        const fenceLines = normalizeSource(source).slice(start, end);
 
         let firstLine, lastLine;
 
