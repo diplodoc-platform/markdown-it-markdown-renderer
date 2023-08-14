@@ -4,6 +4,7 @@ import {Options} from 'markdown-it';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
 import {isListItemClose, isOrderedListClose, isUnorderedListClose} from 'src/rules/block/list';
+import {normalizeSource} from 'src/processors';
 
 const always =
     <T>(v: T) =>
@@ -76,7 +77,7 @@ const checkbox: Renderer.RenderRuleRecord = {
 };
 
 function parseCheckboxSyntax(source: string[], row: number) {
-    const line = source[row];
+    const line = normalizeSource(source)[row];
     const match = line.match(/\[(x|\s|_|-)\]/i);
 
     if (match?.index) {

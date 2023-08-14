@@ -5,6 +5,7 @@ import Token from 'markdown-it/lib/token';
 import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
 import {consumeBlockquote, isBlockquote} from './blockquote';
+import {normalizeSource} from 'src/processors';
 import {isCode} from 'src/rules/block/code';
 import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
@@ -68,7 +69,7 @@ function listItemOpen(
     }
 
     const [start] = getMap(tokens[i]);
-    const [line] = source.slice(start, start + 1);
+    const [line] = normalizeSource(source).slice(start, start + 1);
     if (!line?.length) {
         throw new Error('failed to render ordered list');
     }
@@ -115,7 +116,7 @@ function listItemOpen(
     }
 
     if (empty) {
-        let [next] = source.slice(start + 1, start + 2);
+        let [next] = normalizeSource(source).slice(start + 1, start + 2);
         if (!next?.length) {
             next = '';
         }

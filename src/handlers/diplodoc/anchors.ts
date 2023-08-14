@@ -1,6 +1,7 @@
 import {Options} from 'markdown-it';
 import Token from 'markdown-it/lib/token';
 import {MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 
 const anchors = {
     heading_open: function (
@@ -37,12 +38,12 @@ const anchors = {
             throw new Error('failed to render anchor, no line mapping on header');
         }
 
-        const line = source[row];
+        const line = normalizeSource(source)[row];
         if (!line?.length) {
             throw new Error('failed to render anchor, incorrect source or line mapping');
         }
 
-        const anchor = source[row].match(/\{#([^{]+)\}/gimu);
+        const anchor = normalizeSource(source)[row].match(/\{#([^{]+)\}/gimu);
         if (!anchor?.length) {
             return '';
         }

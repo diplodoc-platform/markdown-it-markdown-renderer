@@ -4,6 +4,7 @@ import Token from 'markdown-it/lib/token';
 
 import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 import {consumeList, isList} from './list';
 import {skipChars} from 'src/parsers';
 import {getMap} from 'src/token';
@@ -26,7 +27,7 @@ const blockquote: Renderer.RenderRuleRecord = {
         }
 
         const [start] = getMap(tokens[i]);
-        const [line] = source.slice(start, start + 1);
+        const [line] = normalizeSource(source).slice(start, start + 1);
         if (!line?.length) {
             throw new Error('failed to render blockquote');
         }

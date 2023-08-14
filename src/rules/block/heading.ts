@@ -2,6 +2,7 @@ import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
+import {normalizeSource} from 'src/processors';
 import {getMap} from 'src/token';
 
 export type HeadingState = {
@@ -58,7 +59,7 @@ const heading: Renderer.RenderRuleRecord = {
 
         const [_, end] = getMap(open);
 
-        return this.EOL + source[end - 1];
+        return this.EOL + normalizeSource(source)[end - 1];
     },
 };
 
