@@ -11,7 +11,7 @@ import {inline} from 'src/rules/inline';
 import {block} from 'src/rules/block';
 import {diplodoc as diplodocRules} from 'src/rules/diplodoc';
 import {diplodoc as diplodocHandlers} from 'src/handlers/diplodoc';
-import {diplodoc as diplodocHooks} from 'src/hooks/diplodoc';
+import {hooks as diplodocHooks} from 'src/hooks';
 import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';
 import list, {
     renderEmptyListItem,
@@ -27,7 +27,6 @@ import {
 } from 'src/rules/block/containers';
 
 import heading, {HeadingState} from 'src/rules/block/heading';
-import image, {ImageState} from 'src/rules/inline/image';
 import link, {LinkState} from 'src/rules/inline/link';
 
 // plugins
@@ -56,15 +55,10 @@ export type MarkdownRendererEnv = {
     terms?: Record<string, string>;
 };
 
-export type MarkdownRendererState = HeadingState &
-    ImageState &
-    LinkState &
-    GFMTableState &
-    TermState;
+export type MarkdownRendererState = HeadingState & LinkState & GFMTableState & TermState;
 
 const initRulesState = () => ({
     ...heading.initState(),
-    ...image.initState(),
     ...link.initState(),
     ...list.initState(),
     ...GFMTable.initState(),
