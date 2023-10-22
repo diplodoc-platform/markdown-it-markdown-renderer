@@ -23,6 +23,30 @@ paragraph with ![image text](file.md "image alt" =100x200) that has both width a
         number: 3,
         html: '',
     },
+    {
+        markdown: `\
+paragraph with ![image text](file.md "image alt")
+`,
+        section: 'imsize',
+        number: 4,
+        html: '',
+    },
+    {
+        markdown: `\
+paragraph with ![image text](file.md)
+`,
+        section: 'imsize',
+        number: 5,
+        html: '',
+    },
+    {
+        markdown: `\
+paragraph with ![[one](one.md)](file.md)
+`,
+        section: 'imsize',
+        number: 6,
+        html: '',
+    },
 ];
 
 export {imsize};
