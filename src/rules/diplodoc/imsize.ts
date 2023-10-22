@@ -1,19 +1,11 @@
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {MarkdownRenderer} from 'src/renderer';
-
-export type ImageState = {
-    image: {
-        pending: Array<Token>;
-    };
-};
-
 const imsize: Renderer.RenderRuleRecord = {
-    image_close: function (this: MarkdownRenderer<ImageState>) {
-        const token = this.state.image.pending.pop();
-        if (token?.type !== 'image') {
-            throw new Error('failed to render image token');
+    image_close: function (tokens: Token[], i: number) {
+        const token = tokens[i];
+        if (token?.type !== 'image_close') {
+            throw new Error('imsize.ts failed to render image token');
         }
 
         let rendered = '](';

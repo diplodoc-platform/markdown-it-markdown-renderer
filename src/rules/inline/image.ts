@@ -1,40 +1,17 @@
 import Renderer from 'markdown-it/lib/renderer';
-import {MarkdownRenderer} from 'src/renderer';
 import Token from 'markdown-it/lib/token';
 
-export type ImageState = {
-    image: {
-        pending: Array<Token>;
-    };
-};
-
-const initState = () => ({
-    image: {
-        pending: new Array<Token>(),
-    },
-});
-
 const image: Renderer.RenderRuleRecord = {
-    image: function (this: MarkdownRenderer<ImageState>, tokens: Token[], i: number, options, env) {
-        const img = tokens[i];
-
-        this.state.image.pending.push(img);
-
-        const open = new Token('image_open', '', 0);
-
-        const close = new Token('image_close', '', 0);
-
-        const children = img.children ?? [];
-
-        return this.renderInline([open, ...children, close], options, env);
+    image: function () {
+        return '';
     },
-    image_open: function (this: MarkdownRenderer) {
+    image_open: function () {
         return '![';
     },
-    image_close: function (this: MarkdownRenderer<ImageState>) {
-        const token = this.state.image.pending.pop();
-        if (token?.type !== 'image') {
-            throw new Error('failed to render image token');
+    image_close: function (tokens: Token[], i: number) {
+        const token = tokens[i];
+        if (token?.type !== 'image_close') {
+            throw new Error('image.ts failed to render image token');
         }
 
         let rendered = '](';
@@ -61,5 +38,5 @@ const image: Renderer.RenderRuleRecord = {
     },
 };
 
-export {image, initState};
-export default {image, initState};
+export {image};
+export default {image};
