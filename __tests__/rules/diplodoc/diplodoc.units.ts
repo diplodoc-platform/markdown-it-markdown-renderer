@@ -1,27 +1,27 @@
 // @ts-ignore
 import MarkdownIt from 'markdown-it';
 // @ts-ignore
-import notes from '@doc-tools/transform/lib/plugins/notes';
+import notes from '@diplodoc/transform/lib/plugins/notes';
 // @ts-ignore
-import cuts from '@doc-tools/transform/lib/plugins/cut';
+import cuts from '@diplodoc/transform/lib/plugins/cut';
 // @ts-ignore
-import monospace from '@doc-tools/transform/lib/plugins/monospace';
+import monospace from '@diplodoc/transform/lib/plugins/monospace';
 // @ts-ignore
-import checkbox from '@doc-tools/transform/lib/plugins/checkbox';
+import checkbox from '@diplodoc/transform/lib/plugins/checkbox';
 // @ts-ignore
-import anchors from '@doc-tools/transform/lib/plugins/anchors';
+import anchors from '@diplodoc/transform/lib/plugins/anchors';
 // @ts-ignore
-import imsize from '@doc-tools/transform/lib/plugins/imsize';
+import imsize from '@diplodoc/transform/lib/plugins/imsize';
 // @ts-ignore
-import file from '@doc-tools/transform/lib/plugins/file';
+import file from '@diplodoc/transform/lib/plugins/file';
 // @ts-ignore
-import tabs from '@doc-tools/transform/lib/plugins/tabs';
+import tabs from '@diplodoc/transform/lib/plugins/tabs';
 // @ts-ignore
-import video from '@doc-tools/transform/lib/plugins/video';
+import video from '@diplodoc/transform/lib/plugins/video';
 // @ts-ignore
-import table from '@doc-tools/transform/lib/plugins/table';
+import table from '@diplodoc/transform/lib/plugins/table';
 // @ts-ignore
-import term from '@doc-tools/transform/lib/plugins/term';
+import term from '@diplodoc/transform/lib/plugins/term';
 
 // @ts-ignore
 import sup from 'markdown-it-sup';
