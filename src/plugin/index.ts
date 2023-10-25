@@ -14,6 +14,7 @@ function mdRenderer(parser: MarkdownIt, parameters?: MarkdownRendererParams) {
     // disable entity rule
     parser.inline.ruler.at('entity', always(false));
     // disable links normalization
+    // eslint-disable-next-line no-param-reassign
     parser.normalizeLink = id;
 
     const options = {
@@ -23,6 +24,7 @@ function mdRenderer(parser: MarkdownIt, parameters?: MarkdownRendererParams) {
     const renderer = new MarkdownRenderer(options);
 
     // @ts-ignore
+    // eslint-disable-next-line no-param-reassign
     parser.renderer = renderer;
 }
 

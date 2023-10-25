@@ -35,7 +35,9 @@ function reorderTabs(parameters: CustomRendererHookParameters) {
         for (let j = start; j < end + 1; j++) {
             content.push(parameters.tokens[j]);
 
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[j] = new Token('markdown-renderer-trash', '', 0);
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[j].content = '';
         }
 

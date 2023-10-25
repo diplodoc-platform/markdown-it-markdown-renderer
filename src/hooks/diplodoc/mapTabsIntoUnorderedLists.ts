@@ -6,19 +6,23 @@ function mapTabsIntoUnorderedLists(parameters: CustomRendererHookParameters) {
         const token = parameters.tokens[i];
 
         if (token.type === 'tab-list_open') {
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[i].type = 'bullet_list_open';
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[i].markup = '-';
 
             continue;
         }
 
         if (token.type === 'tab-list_close') {
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[i].type = 'bullet_list_close';
 
             continue;
         }
 
         if (token.type === 'tab_open') {
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[i].type = 'list_item_open';
 
             const paragraphOpen = new Token('paragraph_open', '', 0);
@@ -32,6 +36,7 @@ function mapTabsIntoUnorderedLists(parameters: CustomRendererHookParameters) {
         }
 
         if (token.type === 'tab_close') {
+            // eslint-disable-next-line no-param-reassign
             parameters.tokens[i].type = 'list_item_close';
             continue;
         }

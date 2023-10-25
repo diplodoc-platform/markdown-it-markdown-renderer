@@ -3,7 +3,7 @@ import {MarkdownRendererEnv} from 'src/renderer';
 import {tests} from 'commonmark-spec';
 
 import {mdRenderer} from 'src/plugin';
-import {semantics, CommonMarkSpecEntry} from './__fixtures__';
+import {CommonMarkSpecEntry, semantics} from './__fixtures__';
 import {normalizeMD} from '__tests__/__helpers__';
 
 const md = new MarkdownIt('commonmark', {html: true});
@@ -14,7 +14,9 @@ const units = tests.filter(({number}) => semantics.has(number));
 
 // todo: remove unnecessary logging
 // for now suppress them
+// eslint-disable-next-line no-console
 console.log = (a) => a;
+// eslint-disable-next-line no-console
 console.info = (a) => a;
 
 describe('markdown semantics', () => {

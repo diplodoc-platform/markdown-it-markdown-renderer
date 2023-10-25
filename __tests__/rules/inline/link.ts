@@ -1,7 +1,7 @@
 import {MarkdownRenderer} from 'src/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {link, initState} from 'src/rules/inline/link';
+import {initState, link} from 'src/rules/inline/link';
 
 describe('link_open', () => {
     it('is named link_open', () => {

@@ -2,7 +2,7 @@ import {Options} from 'markdown-it';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
-import {isFst, isTail, isEmpty, Container, ContainerBase} from 'src/rules/block/containers';
+import {Container, ContainerBase, isEmpty, isFst, isTail} from 'src/rules/block/containers';
 import {MarkdownRenderer, MarkdownRendererEnv} from 'src/renderer';
 import {normalizeSource} from 'src/processors';
 import {consumeList, isList} from './list';

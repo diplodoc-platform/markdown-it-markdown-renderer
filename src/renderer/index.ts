@@ -1,8 +1,8 @@
 import {
     CustomRenderer,
-    CustomRendererParams,
     CustomRendererHanlders,
     CustomRendererHooks,
+    CustomRendererParams,
 } from '@diplodoc/markdown-it-custom-renderer';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
@@ -12,18 +12,18 @@ import {block} from 'src/rules/block';
 import {diplodoc as diplodocRules} from 'src/rules/diplodoc';
 import {diplodoc as diplodocHandlers} from 'src/handlers/diplodoc';
 import {hooks as diplodocHooks} from 'src/hooks';
-import {renderEmptyBlockquote, renderBlockquote} from 'src/rules/block/blockquote';
+import {renderBlockquote, renderEmptyBlockquote} from 'src/rules/block/blockquote';
 import list, {
     renderEmptyListItem,
     renderOrderedList,
     renderUnorderedList,
 } from 'src/rules/block/list';
 import {
-    sameRow,
-    aligned,
-    ContainerRenderer,
     Container,
     ContainerBase,
+    ContainerRenderer,
+    aligned,
+    sameRow,
 } from 'src/rules/block/containers';
 
 import heading, {HeadingState} from 'src/rules/block/heading';
@@ -116,7 +116,6 @@ class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends
         ].map((rfn: ContainerRenderer<CT>) => rfn.bind(this));
     }
 
-    // eslint-disable-next-line complexity
     renderContainer(caller: Token): string {
         let rendered = '';
 
