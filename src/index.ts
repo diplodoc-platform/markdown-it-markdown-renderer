@@ -1,10 +1,10 @@
 import {
+    MarkdownRenderer,
+    MarkdownRendererEnv,
     MarkdownRendererLifeCycle,
     MarkdownRendererMode,
     MarkdownRendererParams,
-    MarkdownRendererEnv,
     MarkdownRendererState,
-    MarkdownRenderer,
 } from 'src/renderer';
 
 import {mdRenderer} from 'src/plugin';

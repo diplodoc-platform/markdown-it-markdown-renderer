@@ -2,6 +2,10 @@ const path = require('path');
 
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
+    snapshotFormat: {
+        escapeString: true,
+        // printBasicPrototype: false,
+    },
     // preset: 'ts-jest',
     testEnvironment: 'node',
     transform: {

@@ -1,7 +1,7 @@
 import {CustomRendererLifeCycle} from '@diplodoc/markdown-it-custom-renderer';
 
 import {image} from './image';
-import {reorderTabs, mapTabsIntoUnorderedLists} from './diplodoc';
+import {mapTabsIntoUnorderedLists, reorderTabs} from './diplodoc';
 
 const hooks = {
     [CustomRendererLifeCycle.BeforeRender]: [reorderTabs, mapTabsIntoUnorderedLists, image],

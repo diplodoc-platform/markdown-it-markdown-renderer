@@ -28,7 +28,7 @@ import sup from 'markdown-it-sup';
 
 import {MarkdownRendererEnv} from '../../../src/renderer';
 import {mdRenderer} from '../../../src/plugin';
-import {tests, SpecEntry} from './__fixtures__';
+import {SpecEntry, tests} from './__fixtures__';
 
 import {normalizeMD} from '../../__helpers__';
 
