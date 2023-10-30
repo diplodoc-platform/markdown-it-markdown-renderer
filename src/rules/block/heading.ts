@@ -20,11 +20,14 @@ const initState = () => ({
 const heading: Renderer.RenderRuleRecord = {
     heading_open: function (this: MarkdownRenderer<HeadingState>, tokens: Token[], i: number) {
         const {markup} = tokens[i];
+        const previousType = tokens[i - 1]?.type;
 
         let rendered = '';
 
         if (i) {
-            rendered += this.EOL;
+            const eolsRepeat = previousType === 'html_block' ? 2 : 1;
+
+            rendered += this.EOL.repeat(eolsRepeat);
         }
 
         rendered += this.renderContainer(tokens[i]);
@@ -38,8 +41,7 @@ const heading: Renderer.RenderRuleRecord = {
 
         this.state.heading.pending.push(tokens[i]);
 
-        const previous = tokens[i - 1];
-        if (previous?.type === 'paragraph_close') {
+        if (previousType === 'paragraph_close') {
             rendered += this.EOL;
         }
 
