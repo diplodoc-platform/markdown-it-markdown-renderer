@@ -12,13 +12,6 @@ md.use(mdRenderer);
 
 const units = tests.filter(({number}) => semantics.has(number));
 
-// todo: remove unnecessary logging
-// for now suppress them
-// eslint-disable-next-line no-console
-console.log = (a) => a;
-// eslint-disable-next-line no-console
-console.info = (a) => a;
-
 describe('markdown semantics', () => {
     units.forEach((entry: CommonMarkSpecEntry) => {
         const {section, number, markdown} = entry;
