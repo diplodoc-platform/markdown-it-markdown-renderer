@@ -13,6 +13,7 @@ import {tabs} from './tabs';
 import {video} from './video';
 import {multilineTables} from './multiline-tables';
 import {term} from './term';
+import {anchor} from './anchor';
 
 const diplodoc: Renderer.RenderRuleRecord = {
     ...notes,
@@ -28,6 +29,7 @@ const diplodoc: Renderer.RenderRuleRecord = {
     ...video,
     ...multilineTables,
     ...term,
+    ...anchor,
 };
 
 export {diplodoc};
