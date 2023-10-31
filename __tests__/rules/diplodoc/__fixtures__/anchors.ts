@@ -17,6 +17,18 @@ const anchors = [
         number: 3,
         html: '',
     },
+    {
+        markdown: '# header {#anchor1} {#anchor2}',
+        section: 'anchors',
+        number: 4,
+        html: '',
+    },
+    {
+        markdown: '# header {#anchor1} {#anchor2} {#anchor3}',
+        section: 'anchors',
+        number: 5,
+        html: '',
+    },
 ];
 
 export {anchors};
