@@ -36,6 +36,8 @@ const notes: Renderer.RenderRuleRecord = {
 
         return rendered;
     },
+    yfm_note_content_open: () => '',
+    yfm_note_content_close: () => '',
     yfm_note_close: function (this: MarkdownRenderer, tokens: Token[], i: number) {
         let rendered = '';
 
