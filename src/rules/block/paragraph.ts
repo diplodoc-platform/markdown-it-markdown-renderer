@@ -15,7 +15,12 @@ const separate = new Set([
     'yfm_note_close',
 ]);
 
-const diplodocBlocks = new Set(['yfm_cut_close', 'yfm_note_close']);
+const diplodocBlocks = new Set([
+    'yfm_cut_close',
+    'yfm_note_close',
+    'yfm_note_content_open',
+    'yfm_note_content_close',
+]);
 
 const paragraph: Renderer.RenderRuleRecord = {
     paragraph_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
