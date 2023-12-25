@@ -28,7 +28,10 @@ const heading: Renderer.RenderRuleRecord = {
         }
 
         rendered += this.renderContainer(tokens[i]);
-        rendered += this.EOL;
+
+        if (i) {
+            rendered += this.EOL;
+        }
 
         // handle atx headings
         if (!isSetexHeading(tokens[i])) {

@@ -31,7 +31,7 @@ const initState = (): ListState => ({
     },
 });
 
-const interrupters = new Set(['hr', 'paragraph_close', 'heading_close', 'code_block', 'fence']);
+const interrupters = new Set(['paragraph_close', 'heading_close', 'code_block', 'fence']);
 
 const list: Renderer.RenderRuleRecord = {
     bullet_list_open: listOpen,
@@ -50,7 +50,7 @@ function listOpen(this: MarkdownRenderer<ListState>, tokens: Token[], i: number)
 
     this.state.list.context.push(type);
 
-    if (interrupters.has(previous.type)) {
+    if (previous && interrupters.has(previous.type)) {
         rendered += this.EOL;
     }
 
