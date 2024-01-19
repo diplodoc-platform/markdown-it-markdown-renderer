@@ -12,6 +12,7 @@ import {block} from 'src/rules/block';
 import {diplodoc as diplodocRules} from 'src/rules/diplodoc';
 import {diplodoc as diplodocHandlers} from 'src/handlers/diplodoc';
 import {hooks as diplodocHooks} from 'src/hooks';
+import {initState as tabsInitState} from 'src/rules/diplodoc/tabs';
 import {renderBlockquote, renderEmptyBlockquote} from 'src/rules/block/blockquote';
 import list, {
     renderEmptyListItem,
@@ -63,6 +64,7 @@ const initRulesState = () => ({
     ...list.initState(),
     ...GFMTable.initState(),
     ...term.initState(),
+    ...tabsInitState(),
 });
 
 class MarkdownRenderer<T = {}, CT extends ContainerBase = ContainerBase> extends CustomRenderer<T> {

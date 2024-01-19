@@ -1,15 +1,37 @@
+import assert from 'node:assert';
 import Renderer from 'markdown-it/lib/renderer';
 import Token from 'markdown-it/lib/token';
 
 import {MarkdownRenderer} from 'src/renderer';
 
+export type TabsState = {
+    tabs: {
+        map: Array<[number, number]>;
+    };
+};
+
+const initState = () => ({
+    tabs: {
+        map: new Array<[number, number]>(),
+    },
+});
+
 const tabs: Renderer.RenderRuleRecord = {
-    tabs_open: function (this: MarkdownRenderer, tokens: Token[], i: number) {
+    tabs_open: function (this: MarkdownRenderer<TabsState>, tokens: Token[], i: number) {
         let rendered = '';
 
         if (i) {
             rendered += this.EOL.repeat(2);
         }
+
+        const [start] = tokens[i + 1].map ?? [1, 1];
+        const map: [number, number] = [start - 1, start];
+        // eslint-disable-next-line no-param-reassign
+        tokens[i].map = map;
+
+        this.state.tabs.map.push(map);
+
+        rendered += this.renderContainer(tokens[i]);
 
         rendered += '{% list tabs %}' + this.EOL;
 
@@ -23,10 +45,17 @@ const tabs: Renderer.RenderRuleRecord = {
     'tab-panel_close': function () {
         return '';
     },
-    tabs_close: function (this: MarkdownRenderer) {
+    tabs_close: function (this: MarkdownRenderer<TabsState>, tokens: Token[], i: number) {
         let rendered = '';
 
         rendered += this.EOL.repeat(2);
+
+        const map = this.state.tabs.map.pop();
+        assert(map?.length);
+        // eslint-disable-next-line no-param-reassign
+        tokens[i].map = map;
+
+        rendered += this.renderContainer(tokens[i]);
 
         rendered += '{% endlist %}';
 
@@ -36,5 +65,5 @@ const tabs: Renderer.RenderRuleRecord = {
     },
 };
 
-export {tabs};
-export default {tabs};
+export {tabs, initState};
+export default {tabs, initState};
