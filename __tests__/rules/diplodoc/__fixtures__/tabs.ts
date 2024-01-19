@@ -62,6 +62,67 @@ text after
         section: 'tabs',
         number: 3,
     },
+    {
+        markdown: `
+{% list tabs %}
+
+- tab 1.1
+
+  1. content 1.1
+
+     {% list tabs %}
+
+     - tab 2.1
+
+       content 2.1
+
+     {% endlist %}
+
+- tab 1.2
+
+  content
+- tab 1.3
+
+  content
+
+{% endlist %}
+`,
+        html: '',
+        section: 'tabs',
+        number: 4,
+    },
+    {
+        markdown: `
+{% list tabs %}
+
+- one
+
+  1. content
+
+     {% list tabs %}
+
+     - one
+
+       content
+     - two
+
+       content
+     - three
+
+       content
+
+     {% endlist %}
+
+- two
+
+  content
+
+{% endlist %}
+`,
+        html: '',
+        section: 'tabs',
+        number: 5,
+    },
 ];
 
 export {tabs};
