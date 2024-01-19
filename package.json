@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@diplodoc/markdown-it-custom-renderer": "^0.1.2",
-    "@diplodoc/transform": "^4.7.1",
+    "@diplodoc/transform": "^4.8.1",
     "markdown-it-sup": "^1.0.0"
   }
 }
