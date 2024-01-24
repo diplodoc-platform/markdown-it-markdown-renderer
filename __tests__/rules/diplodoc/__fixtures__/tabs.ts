@@ -123,6 +123,23 @@ text after
         section: 'tabs',
         number: 5,
     },
+    {
+        markdown: `
+{% list tabs group=helloGroup %}
+
+- one
+
+  content
+- two
+
+  content
+
+{% endlist %}
+`,
+        html: '',
+        section: 'tabs',
+        number: 6,
+    },
 ];
 
 export {tabs};
