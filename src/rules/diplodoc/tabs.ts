@@ -33,7 +33,23 @@ const tabs: Renderer.RenderRuleRecord = {
 
         rendered += this.renderContainer(tokens[i]);
 
-        rendered += '{% list tabs %}' + this.EOL;
+        rendered += '{% list tabs';
+
+        const group = tokens[i].attrGet('data-diplodoc-group');
+        if (!group?.length) {
+            throw new Error('fatal: tab has no group');
+        }
+
+        if (!group.startsWith('defaultTabsGroup')) {
+            const [name] = group.split('-');
+            if (!name?.length) {
+                throw new Error("fatal: couldn't parse group name");
+            }
+
+            rendered += ` group=${name}`;
+        }
+
+        rendered += ' %}' + this.EOL;
 
         return rendered;
     },
