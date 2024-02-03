@@ -56,6 +56,8 @@ const cuts: Renderer.RenderRuleRecord = {
 
         rendered += '{% endcut %}';
 
+        rendered += this.EOL;
+
         return rendered;
     },
 };

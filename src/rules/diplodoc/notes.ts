@@ -49,6 +49,8 @@ const notes: Renderer.RenderRuleRecord = {
 
         rendered += '{% endnote %}';
 
+        rendered += this.EOL;
+
         return rendered;
     },
 };

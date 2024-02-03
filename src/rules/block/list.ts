@@ -31,6 +31,8 @@ const initState = (): ListState => ({
     },
 });
 
+const interrupters = new Set(['paragraph_close', 'heading_close', 'code_block', 'fence']);
+
 const list: Renderer.RenderRuleRecord = {
     bullet_list_open: listOpen,
     bullet_list_close: listClose,
@@ -42,10 +44,17 @@ const list: Renderer.RenderRuleRecord = {
 
 function listOpen(this: MarkdownRenderer<ListState>, tokens: Token[], i: number) {
     const type = tokens[i].type;
+    const previous = tokens[i - 1];
+
+    let rendered = '';
 
     this.state.list.context.push(type);
 
-    return '';
+    if (previous && interrupters.has(previous.type)) {
+        rendered += this.EOL;
+    }
+
+    return rendered;
 }
 
 function listClose(this: MarkdownRenderer<ListState>) {

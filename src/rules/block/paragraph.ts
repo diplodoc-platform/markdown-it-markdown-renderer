@@ -52,7 +52,7 @@ const paragraph: Renderer.RenderRuleRecord = {
         if (previous.type === 'yfm_td_open') {
             return this.renderContainer(current);
         } else if (interrupters.has(previous.type)) {
-            rendered += this.EOL;
+            rendered += this.EOL + this.EOL;
         } else {
             if (previous.type === 'blockquote_close') {
                 rendered += this.EOL;
